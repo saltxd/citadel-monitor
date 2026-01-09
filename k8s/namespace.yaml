@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: situation-monitor
+  labels:
+    app.kubernetes.io/name: situation-monitor
+    app.kubernetes.io/part-of: citadel-monitoring

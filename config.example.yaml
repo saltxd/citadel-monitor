@@ -1,0 +1,110 @@
+# Citadel Monitor Configuration
+# Copy this file to config.yaml and customize for your environment.
+#
+# Minimal setup: Just define your services
+# Full setup: Enable Prometheus, Kubernetes, and/or firewall integrations
+
+# =============================================================================
+# Dashboard Settings
+# =============================================================================
+dashboard:
+  title: "CITADEL MONITOR"
+  version: "v1.0.0"
+  tagline: ""  # Optional subtitle shown in header
+
+# =============================================================================
+# Services to Health Check (always shown)
+# =============================================================================
+# These services are polled every 5 seconds via HTTP GET.
+# Status: up (2xx/3xx), degraded (4xx/5xx), down (timeout/error)
+services:
+  - name: "My App"
+    url: "http://localhost:8080"
+
+  # Example: Service behind Traefik with Host header routing
+  # - name: "Grafana"
+  #   url: "http://192.168.1.231"  # Traefik LB IP
+  #   host: "grafana.example.com"  # Host header for routing
+
+  # Example: Service with custom health endpoint
+  # - name: "API Server"
+  #   url: "http://api.example.com"
+  #   healthPath: "/health"
+
+# =============================================================================
+# Prometheus Integration (optional)
+# =============================================================================
+# Enables: Infrastructure Map, Metrics Panel, Alert Feed
+prometheus:
+  enabled: false
+  url: "http://prometheus:9090"
+
+  # Node exporter targets for infrastructure metrics
+  # Requires node_exporter running on each host
+  nodes:
+    - name: "server-1"
+      host: "192.168.1.10:9100"
+    # - name: "server-2"
+    #   host: "192.168.1.11:9100"
+
+# =============================================================================
+# Kubernetes Integration (optional)
+# =============================================================================
+# Enables: Cluster overview in Infrastructure Map, Activity Timeline
+# Uses in-cluster config when running in K8s, or specify kubeconfig path
+kubernetes:
+  enabled: false
+  # kubeconfig: "/path/to/kubeconfig"  # Optional: for out-of-cluster access
+
+# =============================================================================
+# Firewall Integration (optional)
+# =============================================================================
+# Enables: Network Topology panel
+# Supported: fortigate, pfsense, opnsense (pfsense/opnsense coming soon)
+firewall:
+  enabled: false
+  type: "fortigate"  # fortigate | pfsense | opnsense
+  host: "https://192.168.1.1"
+  tokenEnvVar: "FORTIGATE_TOKEN"  # Environment variable containing API token
+  verifySsl: false  # Set to true if using valid SSL cert
+
+# =============================================================================
+# Example: Full Setup for Homelab
+# =============================================================================
+# dashboard:
+#   title: "HOMELAB MONITOR"
+#   version: "v1.0.0"
+#
+# services:
+#   - name: "Plex"
+#     url: "http://plex:32400/web"
+#   - name: "Home Assistant"
+#     url: "http://homeassistant:8123"
+#   - name: "Grafana"
+#     url: "http://192.168.1.231"
+#     host: "grafana.home.lan"
+#   - name: "Pi-hole"
+#     url: "http://pihole/admin"
+#   - name: "Portainer"
+#     url: "https://portainer:9443"
+#
+# prometheus:
+#   enabled: true
+#   url: "http://prometheus:9090"
+#   nodes:
+#     - name: "proxmox-1"
+#       host: "192.168.1.10:9100"
+#     - name: "proxmox-2"
+#       host: "192.168.1.11:9100"
+#     - name: "nas"
+#       host: "192.168.1.20:9100"
+#
+# kubernetes:
+#   enabled: true
+#
+# firewall:
+#   enabled: true
+#   type: "fortigate"
+#   host: "https://192.168.1.1"
+#   tokenEnvVar: "FORTIGATE_TOKEN"
+#   verifySsl: false
