@@ -45,6 +45,7 @@ k8s/fortigate-secret.yaml
 
 # User configuration (contains environment-specific values)
 config.yaml
+DEV-PRIVATE.md
 
 # Private K8s configs with real homelab IPs/hostnames
 k8s-private/
