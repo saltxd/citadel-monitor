@@ -1,6 +1,9 @@
 # Citadel Monitor
 
 A beautiful, terminal-styled infrastructure monitoring dashboard.
+<img width="1716" height="1040" alt="Screenshot 2026-01-09 at 7 43 02 AM" src="https://github.com/user-attachments/assets/b2164170-da96-4c1b-9a77-1ceaefd7586e" />
+
+![IMG_2230](https://github.com/user-attachments/assets/ec684f9d-1b37-4434-823c-a6b6ff84af38)
 
 ![Dashboard Theme](https://img.shields.io/badge/theme-terminal%20green-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
