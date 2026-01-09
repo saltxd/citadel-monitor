@@ -1,0 +1,44 @@
+---
+# Example ConfigMap - Copy and customize for your environment
+# For your actual config, create k8s-private/configmap.yaml (gitignored)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: citadel-config
+  namespace: situation-monitor
+  labels:
+    app: citadel-monitor
+data:
+  config.yaml: |
+    dashboard:
+      title: "CITADEL MONITOR"
+      version: "v1.0.0"
+
+    # Add your services here
+    services:
+      - name: "Example App"
+        url: "http://app.example.com"
+      - name: "API Server"
+        url: "http://api.example.com"
+        healthPath: "/health"
+
+    # Prometheus integration (optional)
+    prometheus:
+      enabled: false
+      url: "http://prometheus:9090"
+      nodes: []
+      # nodes:
+      #   - name: "server-1"
+      #     host: "10.0.0.10:9100"
+
+    # Kubernetes integration (optional)
+    kubernetes:
+      enabled: false
+
+    # Firewall integration (optional)
+    firewall:
+      enabled: false
+      type: "fortigate"
+      host: "https://firewall.example.com"
+      tokenEnvVar: "FORTIGATE_API_KEY"
+      verifySsl: false

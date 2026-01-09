@@ -1,0 +1,54 @@
+# Python
+backend/venv/
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.eggs/
+*.egg-info/
+*.egg
+
+# Node.js
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.tar
+*.tar.gz
+
+# Logs
+*.log
+npm-debug.log*
+
+# Secrets (never commit the real secret, only the example)
+k8s/fortigate-secret.yaml
+
+# User configuration (contains environment-specific values)
+config.yaml
+
+# Private K8s configs with real homelab IPs/hostnames
+k8s-private/
+
+# Temporary files
+/tmp/
+*.tmp

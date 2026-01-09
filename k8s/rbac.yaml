@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: situation-monitor
+  namespace: situation-monitor
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: situation-monitor-reader
+rules:
+  # Core resources for monitoring
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - pods
+      - services
+      - endpoints
+      - events
+      - namespaces
+      - configmaps
+    verbs: ["get", "list", "watch"]
+  # Apps resources
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - statefulsets
+      - daemonsets
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  # Metrics (if metrics-server installed)
+  - apiGroups: ["metrics.k8s.io"]
+    resources:
+      - nodes
+      - pods
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: situation-monitor-reader-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: situation-monitor-reader
+subjects:
+  - kind: ServiceAccount
+    name: situation-monitor
+    namespace: situation-monitor

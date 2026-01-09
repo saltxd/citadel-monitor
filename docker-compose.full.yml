@@ -1,0 +1,64 @@
+version: '3.8'
+
+# Full stack deployment with Prometheus and Node Exporter
+# Use: docker-compose -f docker-compose.full.yml up -d
+
+services:
+  citadel:
+    image: ghcr.io/saltxd/citadel-monitor:latest
+    # Uncomment to build locally:
+    # build: .
+    container_name: citadel-monitor
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - FORTIGATE_TOKEN=${FORTIGATE_TOKEN:-}
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: citadel-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: citadel-node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data:

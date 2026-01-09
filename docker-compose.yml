@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  citadel:
+    image: ghcr.io/saltxd/citadel-monitor:latest
+    # Uncomment to build locally instead of pulling from GHCR:
+    # build: .
+    container_name: citadel-monitor
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      # Firewall API token (if using FortiGate integration)
+      - FORTIGATE_TOKEN=${FORTIGATE_TOKEN:-}
+    restart: unless-stopped
+    # Optional: Connect to external networks if needed
+    # networks:
+    #   - monitoring

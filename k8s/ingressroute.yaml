@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: citadel-monitor
+  namespace: situation-monitor
+  labels:
+    app: citadel-monitor
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`monitor.example.com`)
+      kind: Rule
+      services:
+        - name: citadel-monitor
+          port: 3000
