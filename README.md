@@ -269,6 +269,12 @@ kubectl create secret generic fortigate-api \
 - Check FortiGate is reachable from container network
 - Try `verifySsl: false` for self-signed certs
 
+## Support
+
+If you find Citadel Monitor useful, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/saltxd)
+
 ## License
 
 MIT
